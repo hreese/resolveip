@@ -61,6 +61,12 @@ func init() {
 	flag.BoolVar(&confNoColor, "no-color", false, "Disable ANSI color codes")
 	flag.BoolVar(&confNoColor, "C", false, "Disable ANSI color codes")
 	flag.Parse()
+    if confNoColor {
+        color.NoColor = true
+    }
+    if confWantColor {
+        color.NoColor = false
+    }
 }
 
 func main() {
@@ -86,7 +92,7 @@ func main() {
 		line := scanner.Text()
 		// find all ip addresses
 		matches := ip46.FindAllStringIndex(scanner.Text(), -1)
-		fmt.Println(resolveIPs(line, matches))
+		fmt.Fprintln(color.Output, resolveIPs(line, matches))
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
