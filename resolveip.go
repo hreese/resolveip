@@ -3,9 +3,11 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"flag"
 	"fmt"
 	"github.com/fatih/color"
-	gar "github.com/goanywhere/regex"
+	"github.com/goanywhere/regex"
+	"io"
 	"net"
 	"os"
 	"regexp"
@@ -13,12 +15,14 @@ import (
 )
 
 var (
-	matchV4           = gar.IPv4.String()
-	matchV6           = gar.IPv6.String()
-	ip46              = regexp.MustCompile(fmt.Sprintf("(?:%s)|(?:%s)", matchV6, matchV4))
-	hilightResolved   = color.New(color.FgGreen).SprintFunc()
-	hilightUnresolved = color.New(color.FgRed).SprintFunc()
-	hilightIP         = color.New(color.Bold).SprintFunc()
+	matchV4                  = regex.IPv4.String()
+	matchV6                  = regex.IPv6.String()
+	ip46                     = regexp.MustCompile(fmt.Sprintf("(?:%s)|(?:%s)", matchV6, matchV4))
+	highlightResolved        = color.New(color.FgGreen).SprintFunc()
+	highlightUnresolved      = color.New(color.FgRed).SprintFunc()
+	highlightIP              = color.New(color.Bold).SprintFunc()
+	confWantColor       bool = false
+	confNoColor         bool = false
 )
 
 func resolveIPs(line string, matches [][]int) string {
@@ -39,10 +43,10 @@ func resolveIPs(line string, matches [][]int) string {
 		// resolve and output match
 		resolved, err := net.LookupAddr(match)
 		if err == nil {
-			buffer.WriteString(hilightIP(match))
-			buffer.WriteString(hilightResolved(" »", strings.Join(resolved, ", "), "« "))
+			buffer.WriteString(highlightIP(match))
+			buffer.WriteString(highlightResolved(" »", strings.Join(resolved, ", "), "« "))
 		} else {
-			buffer.WriteString(hilightUnresolved(match))
+			buffer.WriteString(highlightUnresolved(match))
 		}
 	}
 	// print after last match
@@ -51,9 +55,33 @@ func resolveIPs(line string, matches [][]int) string {
 	return buffer.String()
 }
 
+func init() {
+	flag.BoolVar(&confWantColor, "color", false, "Enforce ANSI color codes")
+	flag.BoolVar(&confWantColor, "c", false, "Enforce ANSI color codes")
+	flag.BoolVar(&confNoColor, "no-color", false, "Disable ANSI color codes")
+	flag.BoolVar(&confNoColor, "C", false, "Disable ANSI color codes")
+	flag.Parse()
+}
+
 func main() {
+	var input io.Reader
+
+	if flag.NArg() == 0 {
+		// read from stdin if no files are given
+		input = os.Stdin
+	} else {
+		// read files from argument list
+		var infiles []io.Reader
+		for _, filename := range flag.Args() {
+			reader, err := os.Open(filename)
+			if err == nil {
+				infiles = append(infiles, reader)
+			}
+		}
+		input = io.MultiReader(infiles...)
+	}
 	// read input line by line
-	scanner := bufio.NewScanner(os.Stdin)
+	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		line := scanner.Text()
 		// find all ip addresses
