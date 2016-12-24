@@ -61,12 +61,12 @@ func init() {
 	flag.BoolVar(&confNoColor, "no-color", false, "Disable ANSI color codes")
 	flag.BoolVar(&confNoColor, "C", false, "Disable ANSI color codes")
 	flag.Parse()
-    if confNoColor {
-        color.NoColor = true
-    }
-    if confWantColor {
-        color.NoColor = false
-    }
+	if confNoColor {
+		color.NoColor = true
+	}
+	if confWantColor {
+		color.NoColor = false
+	}
 }
 
 func main() {
