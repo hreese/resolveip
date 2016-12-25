@@ -14,14 +14,16 @@ import (
 )
 
 var (
-	matchV4                  = `(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`
-	matchV6                  = `(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))`
-	ip46                     = regexp.MustCompile(fmt.Sprintf("(?:%s)|(?:%s)", matchV6, matchV4))
-	highlightResolved        = color.New(color.FgGreen).SprintFunc()
-	highlightUnresolved      = color.New(color.FgRed).SprintFunc()
-	highlightIP              = color.New(color.Bold).SprintFunc()
-	confWantColor       bool = false
-	confNoColor         bool = false
+	matchV4 = regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`)
+	// TODO: this still fails to match xxx::1
+	matchV6             = regexp.MustCompile(`(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))`)
+	highlightResolved   = color.New(color.FgGreen).SprintFunc()
+	highlightUnresolved = color.New(color.FgRed).SprintFunc()
+	highlightIP         = color.New(color.Bold).SprintFunc()
+	confWantColor       bool
+	confNoColor         bool
+	confMatchV4         bool
+	confMatchV6         bool
 )
 
 func resolveIPs(line string, matches [][]int) string {
@@ -55,11 +57,13 @@ func resolveIPs(line string, matches [][]int) string {
 }
 
 func init() {
-	flag.BoolVar(&confWantColor, "color", false, "Enforce ANSI color codes")
 	flag.BoolVar(&confWantColor, "c", false, "Enforce ANSI color codes")
-	flag.BoolVar(&confNoColor, "no-color", false, "Disable ANSI color codes")
 	flag.BoolVar(&confNoColor, "C", false, "Disable ANSI color codes")
+	no4 := flag.Bool("no4", false, "Disable ANSI color codes")
+	no6 := flag.Bool("no6", false, "Disable ANSI color codes")
 	flag.Parse()
+	confMatchV4 = !*no4
+	confMatchV6 = !*no6
 	if confNoColor {
 		color.NoColor = true
 	}
@@ -70,6 +74,8 @@ func init() {
 
 func main() {
 	var input io.Reader
+
+	fmt.Printf("%v %v\n", confMatchV4, confMatchV6)
 
 	if flag.NArg() == 0 {
 		// read from stdin if no files are given
@@ -89,9 +95,17 @@ func main() {
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		line := scanner.Text()
-		// find all ip addresses
-		matches := ip46.FindAllStringIndex(scanner.Text(), -1)
-		fmt.Fprintln(color.Output, resolveIPs(line, matches))
+		// find all IPv6 addresses
+		if confMatchV6 {
+			matches := matchV6.FindAllStringIndex(line, -1)
+			line = resolveIPs(line, matches)
+		}
+		// find all IPv4 addresses
+		if confMatchV4 {
+			matches := matchV4.FindAllStringIndex(line, -1)
+			line = resolveIPs(line, matches)
+		}
+		fmt.Fprintln(color.Output, line)
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
