@@ -75,8 +75,6 @@ func init() {
 func main() {
 	var input io.Reader
 
-	fmt.Printf("%v %v\n", confMatchV4, confMatchV6)
-
 	if flag.NArg() == 0 {
 		// read from stdin if no files are given
 		input = os.Stdin
