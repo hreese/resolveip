@@ -1,7 +1,7 @@
 appname := resolveip
 
 #sources := $(wildcard *.go)
-sources := resolveip.go
+sources := bin/resolveip.go
 
 build = GOOS=$(1) GOARCH=$(2) go build -ldflags="-s -w" -o build/$(appname)$(3)
 tar = cd build && tar -cvzf $(appname)_$(1)_$(2).tar.gz $(appname)$(3) && rm $(appname)$(3)
