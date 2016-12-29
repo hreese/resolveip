@@ -16,7 +16,7 @@ var (
 		Nonmatch:          GenHighlighter(color.Faint),
 		UnresolvableMatch: Chain(GenHighlighter(color.FgRed)),
 		ResolvedMatch:     Chain(GenHighlighter(color.Bold)),
-		Result:            Chain(GenQuoter("»", "«"), GenHighlighter(color.FgGreen)),
+		Result:            Chain(GenQuoter(" »", "« "), GenHighlighter(color.FgGreen)),
 	}
         confMatchV4 bool
         confMatchV6 bool
