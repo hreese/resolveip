@@ -1,64 +1,28 @@
-appname := resolveip
+packagename := resolveip
+source := cmd/resolveip.go
+ldflags := "-s -w"
+PLATFORMS := linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/ freebsd/386/tar/ freebsd/amd64/tar/ darwin/386/tar/ darwin/amd64/tar/ windows/386/zip/.exe windows/amd64/zip/.exe solaris/amd64/tar/
 
-#sources := $(wildcard *.go)
-sources := cmd/resolveip.go
+temp = $(subst /, ,$@)
+os = $(word 1, $(temp))
+arch = $(word 2, $(temp))
+packer = $(word 3, $(temp))
+ext = $(word 4, $(temp))
 
-build = GOOS=$(1) GOARCH=$(2) go build -ldflags="-s -w" -o build/$(appname)$(3) $(sources)
-tar = cd build && tar -cvzf $(appname)_$(1)_$(2).tar.gz $(appname)$(3) && rm $(appname)$(3)
-zip = cd build && zip $(appname)_$(1)_$(2).zip $(appname)$(3) && rm $(appname)$(3)
+tar = cd 'build/$(os)-$(arch)/' && tar cjf '../$(packagename)_$(os)_$(arch).tar.bz2' * && cd .. && rm -rf '$(os)-$(arch)/'
+zip = cd 'build/$(os)-$(arch)/' && zip -9  '../$(packagename)_$(os)_$(arch).zip' * && cd .. && rm -rf '$(os)-$(arch)/'
 
-.PHONY: all windows darwin linux clean
+release: $(PLATFORMS)
 
-all: windows darwin linux freebsd
+$(PLATFORMS):
+	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o 'build/$(os)-$(arch)/$(packagename)$(ext)' $(source)
+	cd 'build/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
+	$(call $(packer))
+
+deploy: $(PLATFORMS)
+	rsync -vaP build/* deploy_binary_reolveip:/srv/www/stuff.heiko-reese.de/resolveip/
 
 clean:
-	rm -rf build/
+	rm -rf build
 
-##### LINUX BUILDS #####
-linux: build/linux_arm.tar.gz build/linux_arm64.tar.gz build/linux_386.tar.gz build/linux_amd64.tar.gz
-
-build/linux_386.tar.gz: $(sources)
-	$(call build,linux,386,)
-	$(call tar,linux,386)
-
-build/linux_amd64.tar.gz: $(sources)
-	$(call build,linux,amd64,)
-	$(call tar,linux,amd64)
-
-build/linux_arm.tar.gz: $(sources)
-	$(call build,linux,arm,)
-	$(call tar,linux,arm)
-
-build/linux_arm64.tar.gz: $(sources)
-	$(call build,linux,arm64,)
-	$(call tar,linux,arm64)
-
-##### DARWIN (MAC) BUILDS #####
-darwin: build/darwin_amd64.tar.gz
-
-build/darwin_amd64.tar.gz: $(sources)
-	$(call build,darwin,amd64,)
-	$(call tar,darwin,amd64)
-
-##### FreeBSD BUILDS #####
-freebsd: build/freebsd_386.tar.gz build/freebsd_amd64.tar.gz
-
-build/freebsd_386.tar.gz: $(sources)
-	$(call build,freebsd,386,)
-	$(call tar,freebsd,386)
-
-build/freebsd_amd64.tar.gz:
-	$(call build,freebsd,amd64,)
-	$(call tar,freebsd,amd64)
-
-##### WINDOWS BUILDS #####
-windows: build/windows_386.zip build/windows_amd64.zip
-
-build/windows_386.zip: $(sources)
-	$(call build,windows,386,.exe)
-	$(call zip,windows,386,.exe)
-
-build/windows_amd64.zip: $(sources)
-	$(call build,windows,amd64,.exe)
-	$(call zip,windows,amd64,.exe)
-
+.PHONY: release clean $(PLATFORMS)
