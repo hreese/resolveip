@@ -32,7 +32,7 @@ func GenQuoter(before, after string) TextMutator {
 // GenHighlighter returns a new TextMutator that colorizes the input string
 func GenHighlighter(attr ...color.Attribute) TextMutator {
 	c := color.New(attr...)
-    sprint := c.SprintFunc()
+	sprint := c.SprintFunc()
 
 	return func(input string) string {
 		return sprint(input)
@@ -41,5 +41,5 @@ func GenHighlighter(attr ...color.Attribute) TextMutator {
 
 // NOP simply returns the input string
 func NOP(input string) string {
-    return input
+	return input
 }

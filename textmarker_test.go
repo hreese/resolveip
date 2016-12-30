@@ -1,12 +1,12 @@
 package resolveip
 
 import (
-    "testing"
-    "fmt"
-    "github.com/fatih/color"
+	"fmt"
+	"github.com/fatih/color"
+	"testing"
 )
 
 func TestQuoting(t *testing.T) {
-    fmt.Println(GenQuoter("»", "«")("Heiko"))
-    fmt.Println(GenHighlighter(color.FgWhite, color.BgRed, color.Italic)("Heiko"))
+	fmt.Println(GenQuoter("»", "«")("Heiko"))
+	fmt.Println(GenHighlighter(color.FgWhite, color.BgRed, color.Italic)("Heiko"))
 }
