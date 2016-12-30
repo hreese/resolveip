@@ -5,9 +5,10 @@ import (
 	"flag"
 	"fmt"
 	. "git.heiko-reese.de/hreese/resolveip"
-    "github.com/fatih/color"
+	"github.com/fatih/color"
 	"io"
 	"os"
+	"runtime"
 )
 
 var (
@@ -18,24 +19,20 @@ var (
 		ResolvedMatch:     Chain(GenHighlighter(color.Bold)),
 		Result:            Chain(GenQuoter(" »", "« "), GenHighlighter(color.FgGreen)),
 	}
-        confMatchV4 bool
-        confMatchV6 bool
-	resolveIPs ResolverFunc
+	confMatchV4 bool
+	confMatchV6 bool
+	resolveIPs  ResolverFunc
 )
 
 // parse commandline arguments
 func init() {
-	var (
-		confWantColor = flag.Bool("c", false, "Enforce ANSI color codes")
-		confNoColor   = flag.Bool("C", false, "Disable ANSI color codes")
-		no4           = flag.Bool("no4", false, "Disable ANSI color codes")
-		no6           = flag.Bool("no6", false, "Disable ANSI color codes")
-	)
+	confWantColor := flag.Bool("c", false, "Enforce ANSI color codes")
+	confNoColor := flag.Bool("C", false, "Disable ANSI color codes")
+	confMatchV4 = !*flag.Bool("no4", false, "Disable ANSI color codes")
+	confMatchV6 = !*flag.Bool("no6", false, "Disable ANSI color codes")
 
 	flag.Parse()
 
-	confMatchV4 = !*no4
-	confMatchV6 = !*no6
 	if *confNoColor {
 		color.NoColor = true
 	}
@@ -82,4 +79,13 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
+
+    // Use case for this is: user drops text file(s) onto executable
+    // on Windows, this “pauses” the program upon exit
+	if runtime.GOOS == "windows" && input != os.Stdin {
+		fmt.Print("Press Enter do exit")
+		reader := bufio.NewReader(os.Stdin)
+		reader.ReadString('\n')
+	}
+
 }
