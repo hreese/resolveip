@@ -19,9 +19,10 @@ var (
 		ResolvedMatch:     Chain(GenHighlighter(color.Bold)),
 		Result:            Chain(GenQuoter(" »", "« "), GenHighlighter(color.FgGreen)),
 	}
-	confMatchV4 bool
-	confMatchV6 bool
-	resolveIPs  ResolverFunc
+	confMatchV4                   bool
+	confMatchV6                   bool
+	confWindowsNoCloseOnFilesRead bool
+	resolveIPs                    ResolverFunc
 )
 
 // parse commandline arguments
@@ -30,6 +31,7 @@ func init() {
 	confNoColor := flag.Bool("C", false, "Disable ANSI color codes")
 	confMatchV4 = !*flag.Bool("no4", false, "Disable ANSI color codes")
 	confMatchV6 = !*flag.Bool("no6", false, "Disable ANSI color codes")
+	confWindowsNoCloseOnFilesRead = *flag.Bool("batch", false, "Does not read from stdin after all files are processed (Windows only)")
 
 	flag.Parse()
 
@@ -58,7 +60,13 @@ func main() {
 				infiles = append(infiles, reader)
 			}
 		}
-		input = io.MultiReader(infiles...)
+		// Use case for this is: user drops text file(s) onto executable
+		// on Windows, this “pauses” the program upon exit
+		if runtime.GOOS == "windows" && confWindowsNoCloseOnFilesRead {
+			input = io.MultiReader(io.MultiReader(infiles...), os.Stdin)
+		} else {
+			input = io.MultiReader(infiles...)
+		}
 	}
 	// read input line by line
 	scanner := bufio.NewScanner(input)
@@ -78,14 +86,6 @@ func main() {
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
-	}
-
-    // Use case for this is: user drops text file(s) onto executable
-    // on Windows, this “pauses” the program upon exit
-	if runtime.GOOS == "windows" && input != os.Stdin {
-		fmt.Print("Press Enter do exit")
-		reader := bufio.NewReader(os.Stdin)
-		reader.ReadString('\n')
 	}
 
 }
