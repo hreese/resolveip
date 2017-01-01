@@ -2,7 +2,7 @@
 
 Resolve IP addresses in text streams to names.
 
-![screencast](raw/master/res/.screencast01.gif)
+![screencast](res/.screencast01.gif)
 
 ## Binary releases
 
