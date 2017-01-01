@@ -2,6 +2,8 @@
 
 Resolve IP addresses in text streams to names.
 
+![screencast](/raw/master/res/.screencast01.gif)
+
 ## Binary releases
 
 * Linux: [32bit](https://stuff.heiko-reese.de/resolveip/resolveip_linux_386.tar.bz2), [64bit](https://stuff.heiko-reese.de/resolveip/resolveip_linux_amd64.tar.bz2), [ARM](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm.tar.bz2), [ARM64](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm64.tar.bz2)
