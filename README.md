@@ -28,7 +28,7 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 * [x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_amd64.tar.bz2)
 
 ## Solaris ##
-* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_solaris_amd64.tar.bz2)
+* [x86 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_solaris_amd64.tar.bz2)
 
 # ToDo
 
