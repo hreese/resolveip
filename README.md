@@ -5,6 +5,8 @@ It is primarily meant as an interactive tool but can also read from files and pi
 
 ![screencast](res/.screencast01.gif)
 
+When reading files (this includes dropping text files on the resolveip icon) on Windows, resolveip adds the console input to the list of inputs. This keeps the console window open after reading all initial inputs. To use resolveip in pipes on Windows, add the ```-batch``` flag.
+
 ## Binary releases
 
 ## Linux ##
