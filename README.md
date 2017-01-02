@@ -9,23 +9,37 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 
 ## Binary releases
 
-## Linux ##
+### Linux
 * [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_386.tar.bz2)
 * **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_amd64.tar.bz2)**
 * [ARM](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm.tar.bz2)
 * [ARM64](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm64.tar.bz2)
 
-## Windows ##
+### Windows
 * [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_386.zip)
 * **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)**
 
-## macOS ##
+### macOS
 Compiling macOS binaries on Linux does not seem to yield working software at the moment. Please build it yourself or wait for me to get a usable build machine.
 
 * ~~[x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2)~~
 * ~~**[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**~~
 
-# ToDo
+## Building from source
+1. [Install](https://golang.org/dl) and [configure](https://golang.org/doc/install) the [Go](https://golang.org/) toolchain. Most Linux distributions already have it packaged. [Homebrew](http://brew.sh) also has a package.
+2. Clone the source into the correct directory:
+```
+go get git.heiko-reese.de/hreese/resolveip
+# install this if you want to compile for Windows
+go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+```
+3. Build:
+```
+cd $GOPATH/src/git.heiko-reese.de/hreese/resolveip
+make
+```
+
+## ToDo
 
 * better documentation
 * add more commandline switches for output customization:
