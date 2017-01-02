@@ -1,7 +1,8 @@
 packagename := resolveip
 source := cmd/resolveip.go
 ldflags := "-s -w"
-PLATFORMS_UNIX := linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/ freebsd/386/tar/ freebsd/amd64/tar/ darwin/386/tar/ darwin/amd64/tar/ solaris/amd64/tar/
+PLATFORMS_UNIX := linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/ darwin/386/tar/ darwin/amd64/tar/
+PLATFORMS_CURRENTLY_UNSUPPORTED := solaris/amd64/tar/ freebsd/386/tar/ freebsd/amd64/tar/
 PLATFORMS_WIN  := windows/386/zip/.exe windows/amd64/zip/.exe
 PLATFORMS := $(PLATFORMS_UNIX) $(PLATFORMS_WIN)
 
@@ -22,6 +23,7 @@ $(PLATFORMS_UNIX):
 	$(call $(packer))
 
 $(PLATFORMS_WIN):
+	go generate
 	# "cd cmd" is needed to embed the icon into the windows binaries
 	cd cmd && GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '../build/$(os)-$(arch)/$(packagename)$(ext)'
 	cd 'build/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt

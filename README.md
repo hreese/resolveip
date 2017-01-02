@@ -25,13 +25,6 @@ Compiling macOS binaries on Linux does not seem to yield working software at the
 * ~~[x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2)~~
 * ~~**[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**~~
 
-## FreeBSD ##
-* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_386.tar.bz2)
-* [x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_amd64.tar.bz2)
-
-## Solaris ##
-* [x86 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_solaris_amd64.tar.bz2)
-
 # ToDo
 
 * better documentation
