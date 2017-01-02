@@ -19,11 +19,11 @@ It is primarily meant as an interactive tool but can also read from files and pi
 
 ## macOS ##
 * [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2)
-* **[x86-64 (64bit Intel/AMD)]](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**
+* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**
 
 ## FreeBSD ##
 * [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_386.tar.bz2)
-* [x86-64 (64bit Intel/AMD)]](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_amd64.tar.bz2)
+* [x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_amd64.tar.bz2)
 
 ## Solaris ##
 * [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_solaris_amd64.tar.bz2)
