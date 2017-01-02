@@ -17,16 +17,18 @@ zip = cd 'build/$(os)-$(arch)/' && zip -9  '../$(packagename)_$(os)_$(arch).zip'
 
 release: $(PLATFORMS)
 
-$(PLATFORMS_UNIX):
+$(PLATFORMS_UNIX): README.md
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o 'build/$(os)-$(arch)/$(packagename)$(ext)' $(source)
 	cd 'build/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
+	sed -r -e '/.screencast01.gif/d' README.md > 'build/$(os)-$(arch)/README.md'
 	$(call $(packer))
 
-$(PLATFORMS_WIN):
+$(PLATFORMS_WIN): README.md
 	go generate
 	# "cd cmd" is needed to embed the icon into the windows binaries
 	cd cmd && GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '../build/$(os)-$(arch)/$(packagename)$(ext)'
 	cd 'build/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
+	sed -r -e '/.screencast01.gif/d' README.md > 'build/$(os)-$(arch)/README.md'
 	$(call $(packer))
 
 deploy: $(PLATFORMS)
