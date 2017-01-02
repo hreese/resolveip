@@ -1,23 +1,32 @@
 # resolveip
 
-{{{resolveip}}} finds IP addresses (both IPv4 and IPv6 by default) in texts and resolves them using the system's local resolver.
+```resolveip``` finds IP addresses (both IPv4 and IPv6 by default) in texts and resolves them using the system's local resolver.
 It is primarily meant as an interactive tool but can also read from files and pipes.
 
 ![screencast](res/.screencast01.gif)
 
 ## Binary releases
 
-* Linux: [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_386.tar.bz2),
-         *[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_amd64.tar.bz2)*,
-         [ARM](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm.tar.bz2),
-         [ARM64](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm64.tar.bz2)
-* Windows: [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_386.zip),
-           *[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)*
-* macOS: [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2),
-         *[x86-64 (64bit Intel/AMD)]](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)*
-* FreeBSD: [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_386.tar.bz2)
-           [x86-64 (64bit Intel/AMD)]](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_amd64.tar.bz2)
-* Solaris: [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_solaris_amd64.tar.bz2)
+## Linux ##
+* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_386.tar.bz2)
+* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_amd64.tar.bz2)**
+* [ARM](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm.tar.bz2)
+* [ARM64](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm64.tar.bz2)
+
+## Windows ##
+* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_386.zip)
+* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)**
+
+## macOS ##
+* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2)
+* **[x86-64 (64bit Intel/AMD)]](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**
+
+## FreeBSD ##
+* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_386.tar.bz2)
+* [x86-64 (64bit Intel/AMD)]](https://stuff.heiko-reese.de/resolveip/resolveip_freebsd_amd64.tar.bz2)
+
+## Solaris ##
+* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_solaris_amd64.tar.bz2)
 
 # ToDo
 
