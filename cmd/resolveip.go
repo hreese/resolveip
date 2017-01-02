@@ -34,8 +34,8 @@ var (
 func init() {
 	confWantColor := flag.Bool("c", false, "Enforce ANSI color codes")
 	confNoColor := flag.Bool("C", false, "Disable ANSI color codes")
-	confMatchV4 = !*flag.Bool("no4", false, "Disable ANSI color codes")
-	confMatchV6 = !*flag.Bool("no6", false, "Disable ANSI color codes")
+	confMatchV4 = !*flag.Bool("no4", false, "Disable matching of IPv4 addresses")
+	confMatchV6 = !*flag.Bool("no6", false, "Disable matching of IPv6 addresses")
 	flag.BoolVar(&confBatch, "batch", false, "Does not read from stdin after all files are processed (Windows only)")
 
 	flag.Parse()
