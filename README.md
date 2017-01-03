@@ -20,12 +20,13 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 * **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)**
 
 ### macOS
-Compiling macOS binaries on Linux does not seem to yield working software at the moment. Please build it yourself or wait for me to get a usable build machine.
+Compiling macOS binaries on Linux does not seem to yield working software at the moment. Please [build from source](#building-from-source).
 
 * ~~[x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2)~~
 * ~~**[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**~~
 
 ## Building from source
+
 ### Get Go
 
 [Install](https://golang.org/dl) and [configure](https://golang.org/doc/install) the [Go](https://golang.org/) toolchain. Most Linux distributions already have it packaged. [Homebrew](http://brew.sh) also has a package.
