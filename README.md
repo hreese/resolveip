@@ -26,21 +26,25 @@ Compiling macOS binaries on Linux does not seem to yield working software at the
 * ~~**[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**~~
 
 ## Building from source
-1. [Install](https://golang.org/dl) and [configure](https://golang.org/doc/install) the [Go](https://golang.org/) toolchain. Most Linux distributions already have it packaged. [Homebrew](http://brew.sh) also has a package.
-2. Get the source:
+### Get Go
+
+[Install](https://golang.org/dl) and [configure](https://golang.org/doc/install) the [Go](https://golang.org/) toolchain. Most Linux distributions already have it packaged. [Homebrew](http://brew.sh) also has a package.
+
+### Get the source
+
 ```
 go get git.heiko-reese.de/hreese/resolveip
 # install this if you want to compile for Windows
 go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 ```
-3. Build:
+### Build
 
-Build for your local architecture:
+#### Build for your local architecture
 ```
 go install git.heiko-reese.de/hreese/resolveip/cmd/resolveip
 ```
 
-Build and package for all supported architectures:
+#### Build and package for all supported architectures
 
 ```
 cd $GOPATH/src/git.heiko-reese.de/hreese/resolveip
