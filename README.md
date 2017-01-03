@@ -20,20 +20,33 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 * **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)**
 
 ### macOS
-Compiling macOS binaries on Linux does not seem to yield working software at the moment. Please build it yourself or wait for me to get a usable build machine.
+Compiling macOS binaries on Linux does not seem to yield working software at the moment. Please [build from source](#building-from-source).
 
 * ~~[x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.tar.bz2)~~
 * ~~**[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.tar.bz2)**~~
 
 ## Building from source
-1. [Install](https://golang.org/dl) and [configure](https://golang.org/doc/install) the [Go](https://golang.org/) toolchain. Most Linux distributions already have it packaged. [Homebrew](http://brew.sh) also has a package.
-2. Clone the source into the correct directory:
+
+### Get Go
+
+[Install](https://golang.org/dl) and [configure](https://golang.org/doc/install) the [Go](https://golang.org/) toolchain. Most Linux distributions already have it packaged. [Homebrew](http://brew.sh) also has a package.
+
+### Get the source
+
 ```
 go get git.heiko-reese.de/hreese/resolveip
 # install this if you want to compile for Windows
-go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 ```
-3. Build:
+### Build
+
+#### Build for your local architecture
+```
+go install git.heiko-reese.de/hreese/resolveip/cmd/resolveip
+```
+
+#### Build and package for all supported architectures
+
 ```
 cd $GOPATH/src/git.heiko-reese.de/hreese/resolveip
 make
@@ -45,6 +58,3 @@ make
 * add more commandline switches for output customization:
     * different ANSI codes for text, results, matches and non-matches
     * remove resolved ip addresses
-    * …
-
-These are unlikely to get fixed in the near future as the author is quite happy with the current state and also quite lazy.
