@@ -20,10 +20,14 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 * **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)**
 
 ### macOS
-Compiling macOS binaries on Linux does not seem to yield working software at the moment. Please [build from source](#building-from-source).
 
-* ~~[x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.dmg)~~
-* ~~**[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.dmg)**~~
+* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.dmg)
+* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.dmg)**
+
+Open the DMG, copy resolveip into your ```$PATH``` and remove the quarantine attribute if necessary:
+```
+xattr -rd com.apple.quarantine resolveip
+```
 
 ## Building from source
 
