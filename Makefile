@@ -1,5 +1,5 @@
 packagename := resolveip
-source := git.heiko-reese.de/hreese/resolveip/cmd/resolveip
+source := github.com/hreese/resolveip/cmd/resolveip
 builddir := build
 ldflags := "-s -w"
 PLATFORMS_UNIX := linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/ darwin/386/dmg/ darwin/amd64/dmg/

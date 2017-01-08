@@ -38,7 +38,7 @@ xattr -rd com.apple.quarantine resolveip
 ### Get the source
 
 ```
-go get git.heiko-reese.de/hreese/resolveip
+go get github.com/hreese/resolveip
 # install this if you want to compile for Windows
 go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 ```
@@ -46,19 +46,12 @@ go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 
 #### Build for your local architecture
 ```
-go install git.heiko-reese.de/hreese/resolveip/cmd/resolveip
+go install github.com/hreese/resolveip/cmd/resolveip
 ```
 
 #### Build and package for all supported architectures
 
 ```
-cd $GOPATH/src/git.heiko-reese.de/hreese/resolveip
+cd $GOPATH/src/github.com/hreese/resolveip
 make
 ```
-
-## ToDo
-
-* better documentation
-* add more commandline switches for output customization:
-    * different ANSI codes for text, results, matches and non-matches
-    * remove resolved ip addresses
