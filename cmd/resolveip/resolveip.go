@@ -11,6 +11,7 @@ import (
 	"fmt"
 	. "git.heiko-reese.de/hreese/resolveip"
 	"github.com/fatih/color"
+	. "github.com/hreese/goodregex"
 	"io"
 	"os"
 	"runtime"
@@ -79,12 +80,12 @@ func main() {
 		line := scanner.Text()
 		// find all IPv6 addresses
 		if confMatchV6 {
-			matches := MatchV6.FindAllStringIndex(line, -1)
+			matches := MatchIPv6.FindAllStringIndex(line, -1)
 			line = resolveIPs(line, matches)
 		}
 		// find all IPv4 addresses
 		if confMatchV4 {
-			matches := MatchV4.FindAllStringIndex(line, -1)
+			matches := MatchIPv4.FindAllStringIndex(line, -1)
 			line = resolveIPs(line, matches)
 		}
 		fmt.Fprintln(color.Output, line)

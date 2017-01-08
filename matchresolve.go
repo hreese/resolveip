@@ -3,27 +3,7 @@ package resolveip
 import (
 	"bytes"
 	"net"
-	"regexp"
 	"strings"
-)
-
-const (
-	regexMatchV6 = `(
-        # addresses containing ::
-                                                      :: (?:(?:[[:alnum:]]{1,4}:){0,6}(?:[[:alnum:]]{1,4})){0,1} | 
-                                 (?:[[:alnum:]]{1,4}) :: (?:(?:[[:alnum:]]{1,4}:){0,5}(?:[[:alnum:]]{1,4})){0,1} |
-        (?:[[:alnum:]]{1,4}:){1} (?:[[:alnum:]]{1,4}) :: (?:(?:[[:alnum:]]{1,4}:){0,4}(?:[[:alnum:]]{1,4})){0,1} |
-        (?:[[:alnum:]]{1,4}:){2} (?:[[:alnum:]]{1,4}) :: (?:(?:[[:alnum:]]{1,4}:){0,3}(?:[[:alnum:]]{1,4})){0,1} |
-        (?:[[:alnum:]]{1,4}:){3} (?:[[:alnum:]]{1,4}) :: (?:(?:[[:alnum:]]{1,4}:){0,2}(?:[[:alnum:]]{1,4})){0,1} |
-        (?:[[:alnum:]]{1,4}:){4} (?:[[:alnum:]]{1,4}) :: (?:(?:[[:alnum:]]{1,4}:){0,1}(?:[[:alnum:]]{1,4})){0,1} |
-        (?:[[:alnum:]]{1,4}:){5} (?:[[:alnum:]]{1,4}) :: (?:[[:alnum:]]{1,4}){0,1}                               |
-        (?:[[:alnum:]]{1,4}:){6} (?:[[:alnum:]]{1,4}) ::                                                         |
-        # plain IPv6 address
-        (?:[[:alnum:]]{1,4}:){7} (?:[[:alnum:]]{1,4})
-        )`
-	regexMatchV4 = `
-        (?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}
-        (?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`
 )
 
 type OutputConfig struct {
@@ -31,20 +11,6 @@ type OutputConfig struct {
 	ResolvedMatch     TextMutator
 	UnresolvableMatch TextMutator
 	Result            TextMutator
-}
-
-var (
-	regexRemoveComments = regexp.MustCompile("(?m:#.*$)")
-	regexRemoveSpaces   = regexp.MustCompile("(?m:[[:space:]]+)")
-	MatchV4             = MustCompileReadableRegex(regexMatchV4)
-	MatchV6             = MustCompileReadableRegex(regexMatchV6)
-)
-
-// MustCompileReadableRegex fixes and compiles a readable regex
-func MustCompileReadableRegex(r string) *regexp.Regexp {
-	r = regexRemoveComments.ReplaceAllString(r, "")
-	r = regexRemoveSpaces.ReplaceAllString(r, "")
-	return regexp.MustCompile(r)
 }
 
 type ResolverFunc func(string, [][]int) string
