@@ -8,4 +8,5 @@ go:
 install:
     - go get ./...
 
-script: make linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/
+script:
+    - go build github.com/hreese/resolveip/cmd/resolveip
