@@ -8,4 +8,4 @@ go:
 install:
     - go get ./...
 
-script: linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/
+script: make linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/
