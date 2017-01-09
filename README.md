@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hreese/resolveip.svg?branch=master)](https://travis-ci.org/hreese/resolveip)
+
 # resolveip
 
 ```resolveip``` finds IP addresses (both IPv4 and IPv6 by default) in texts and resolves them using the system's local resolver.
