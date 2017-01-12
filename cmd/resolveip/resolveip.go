@@ -1,4 +1,4 @@
-//go:generate goversioninfo -icon=../res/icon.ico
+//go:generate goversioninfo -icon=../../res/icon.ico
 
 // install goversioninfo to generate and embed a Windows Icon
 //   go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
