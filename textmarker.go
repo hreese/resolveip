@@ -7,7 +7,7 @@ import (
 // TextMutator changes a given string
 type TextMutator func(string) string
 
-// Chain returns a new TextMutator that applies all given TextMutator funcations in order
+// Chain returns a new TextMutator that applies all given TextMutator functions in order
 func Chain(mfuncs ...TextMutator) TextMutator {
 	return func(input string) string {
 		for _, m := range mfuncs {
