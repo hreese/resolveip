@@ -19,11 +19,22 @@ dmg = cd '$(builddir)/$(os)-$(arch)/' && genisoimage -V '$(packagename)' -D -R -
 
 release: $(PLATFORMS)
 
-$(PLATFORMS): README.md
+cmd/resolveip/resource.syso: res/icon.ico
+	go generate github.com/hreese/resolveip/cmd/resolveip
+
+$(PLATFORMS_WIN): README.md build cmd/resolveip/resource.syso
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '$(builddir)/$(os)-$(arch)/$(packagename)$(ext)' $(source)
 	cd '$(builddir)/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
 	sed -r -e '/.screencast01.gif/d' README.md > '$(builddir)/$(os)-$(arch)/README.md'
 	$(call $(packer))
+
+$(PLATFORMS_UNIX): README.md build
+	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '$(builddir)/$(os)-$(arch)/$(packagename)$(ext)' $(source)
+	cd '$(builddir)/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
+	sed -r -e '/.screencast01.gif/d' README.md > '$(builddir)/$(os)-$(arch)/README.md'
+	$(call $(packer))
+
+build: $(PLATFORMS)
 
 deploy: $(PLATFORMS)
 	rsync -vaP build/* deploy_binary_reolveip:/srv/www/stuff.heiko-reese.de/resolveip/
@@ -31,4 +42,4 @@ deploy: $(PLATFORMS)
 clean:
 	rm -rf $(builddir)
 
-.PHONY: release clean $(PLATFORMS)
+.PHONY: release clean $(PLATFORMS) build

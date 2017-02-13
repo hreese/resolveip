@@ -25,16 +25,18 @@ var (
 		ResolvedMatch:     Chain(GenHighlighter(color.Bold)),
 		Result:            Chain(GenQuoter(" »", "« "), GenHighlighter(color.FgGreen)),
 	}
-	confMatchV4 bool
-	confMatchV6 bool
-	confBatch   bool
-	resolveIPs  ResolverFunc
+	confMatchV4   bool
+	confMatchV6   bool
+	confBatch     bool
+	confWantColor *bool
+	confNoColor   *bool
+	resolveIPs    ResolverFunc
 )
 
 // parse commandline arguments
 func init() {
-	confWantColor := flag.Bool("c", false, "Enforce ANSI color codes")
-	confNoColor := flag.Bool("C", false, "Disable ANSI color codes")
+	confWantColor = flag.Bool("c", false, "Enforce ANSI color codes")
+	confNoColor = flag.Bool("C", false, "Disable ANSI color codes")
 	confMatchV4 = !*flag.Bool("no4", false, "Disable matching of IPv4 addresses")
 	confMatchV6 = !*flag.Bool("no6", false, "Disable matching of IPv6 addresses")
 	flag.BoolVar(&confBatch, "batch", false, "Does not read from stdin after all files are processed (Windows only)")
@@ -67,9 +69,11 @@ func main() {
 			}
 		}
 		// Use case for this is: user drops text file(s) onto executable
-		// on Windows, this “pauses” the program upon exit
+		// on Windows, this prevents the program windows to close upon exit
 		if runtime.GOOS == "windows" && confBatch == false {
-			input = io.MultiReader(io.MultiReader(infiles...), os.Stdin)
+			input = io.MultiReader(io.MultiReader(infiles...),
+				NewInfoWriter("# Start typing or pasting text here\n", os.Stderr),
+				os.Stdin)
 		} else {
 			input = io.MultiReader(infiles...)
 		}
