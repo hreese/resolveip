@@ -24,13 +24,13 @@ cmd/resolveip/resource.syso: res/icon.ico
 
 $(PLATFORMS_WIN): README.md build cmd/resolveip/resource.syso
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '$(builddir)/$(os)-$(arch)/$(packagename)$(ext)' $(source)
-	cd '$(builddir)/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
+	cd '$(builddir)/$(os)-$(arch)/'
 	sed -r -e '/.screencast01.gif/d' README.md > '$(builddir)/$(os)-$(arch)/README.md'
 	$(call $(packer))
 
 $(PLATFORMS_UNIX): README.md build
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '$(builddir)/$(os)-$(arch)/$(packagename)$(ext)' $(source)
-	cd '$(builddir)/$(os)-$(arch)/' && sha256sum -b * > sha256sum.txt
+	cd '$(builddir)/$(os)-$(arch)/'
 	sed -r -e '/.screencast01.gif/d' README.md > '$(builddir)/$(os)-$(arch)/README.md'
 	$(call $(packer))
 
