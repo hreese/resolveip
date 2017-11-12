@@ -1,12 +1,25 @@
 language: go
-
 go:
-    - 1.6
-    - 1.7
-    - master
-
+- 1.9
 install:
-    - go get ./...
-
+- go get github.com/hreese/...
+- go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 script:
-    - go build github.com/hreese/resolveip/cmd/resolveip
+- go build github.com/hreese/resolveip/cmd/resolveip
+deploy:
+  provider: releases
+  api_key:
+    secure: pFPLiuvPKQWc/2FG6DooikVfjUkGD2aVzUJfZlOEfeHVFIlNz+tXqIUFh7DDAJ0e2QeXcfhQ5SGN6wooSbi+F14Ww1jeIZOvYiV/0td6K8c9b2pL8JfOORKAOW7Ndp4B3QgQE6ywHFXOcDYLTAKdtD5ykB4xyutx/gUUHOuhNiLAgMZoA4iYBVRJcrU0me8BiPDBL6MeYCFEK7+/wBDZpNe9nuLSyWmWNtq0/noWGAyCQQvpKl8xEKc9gcG8H/MpFoYCH4iWcZzxDLoLZpu69ZcyAU05Siutb9ZZZg0rrqsw/EHh5f0WfcAQo4iBz1oOTWy0H1x2gqfMndlOAP4fiND2XN6SLap5uVfP8jGFSrpyZYiFTjofvPCxQzUyMwz0YLxvMbMsNsVSsADNzgdvJbbVtFhtLEBHdB7d32W2Ns1Nvk9uxdfivb1C5t/g3AV98CSAjxdlLLocTGsiTk7moAKLvfkWfm3MXkhwZxgX2CJDe9XiGujvxVPZZ1mj6wafNrXK3NXMoudNIgcZJfvXUdo/92X8uIFk8bjbPSt9oM0FIlqmhZLR/pVEl8PiJUYzSqfIG2WmQF5msxBWbsNVCtPoHLm8nq1zkfqPFVJSeyGeD0rSzFJsEOojK0Ax8fz+NHJvppxpGr9XgNtzDIIs7ApRsa4YG46aJ45WlkzPYHk=
+  file:
+    - build/resolveip_darwin_386.dmg
+    - build/resolveip_darwin_amd64.dmg
+    - build/resolveip_linux_386.tar.bz2
+    - build/resolveip_linux_amd64.tar.bz2
+    - build/resolveip_linux_arm64.tar.bz2
+    - build/resolveip_linux_arm.tar.bz2
+    - build/resolveip_windows_386.zip
+    - build/resolveip_windows_amd64.zip
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: hreese/resolveip

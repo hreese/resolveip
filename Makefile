@@ -36,9 +36,6 @@ $(PLATFORMS_UNIX): README.md build
 
 build: $(PLATFORMS)
 
-deploy: $(PLATFORMS)
-	rsync -vaP build/* deploy_binary_reolveip:/srv/www/stuff.heiko-reese.de/resolveip/
-
 clean:
 	rm -rf $(builddir)
 
