@@ -1,6 +1,9 @@
 language: go
 go:
 - 1.9
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y genisoimage
 install:
 - go get github.com/hreese/...
 - go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
