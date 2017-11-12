@@ -11,22 +11,11 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 
 ## Binary releases
 
-### Linux
-* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_386.tar.bz2)
-* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_linux_amd64.tar.bz2)**
-* [ARM](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm.tar.bz2)
-* [ARM64](https://stuff.heiko-reese.de/resolveip/resolveip_linux_arm64.tar.bz2)
+Binaries for Linux, macOS and Windows are automatically built by travis-ci and available
+on the [project's releases page](https://github.com/hreese/resolveip/releases).
 
-### Windows
-* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_386.zip)
-* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_windows_amd64.zip)**
-
-### macOS
-
-* [x86 (32bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_386.dmg)
-* **[x86-64 (64bit Intel/AMD)](https://stuff.heiko-reese.de/resolveip/resolveip_darwin_amd64.dmg)**
-
-Open the DMG, copy resolveip into your ```$PATH``` and remove the quarantine attribute if necessary:
+Note to macOS users: Open the DMG, copy resolveip into your ```$PATH``` and remove the
+quarantine attribute if necessary:
 ```
 xattr -rd com.apple.quarantine resolveip
 ```
@@ -40,9 +29,9 @@ xattr -rd com.apple.quarantine resolveip
 ### Get the source
 
 ```
-go get github.com/hreese/resolveip
+go get github.com/hreese/resolveip/...
 # install this if you want to compile for Windows
-go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+go git github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 ```
 ### Build
 
