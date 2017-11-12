@@ -5,7 +5,7 @@ install:
 - go get github.com/hreese/...
 - go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
 script:
-- go build github.com/hreese/resolveip/cmd/resolveip
+- make release
 deploy:
   provider: releases
   api_key:
