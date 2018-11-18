@@ -9,12 +9,13 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
-	. "github.com/hreese/goodregex"
-	. "github.com/hreese/resolveip"
 	"io"
 	"os"
 	"runtime"
+
+	"github.com/fatih/color"
+	. "github.com/hreese/goodregex"
+	. "github.com/hreese/resolveip"
 )
 
 var (
