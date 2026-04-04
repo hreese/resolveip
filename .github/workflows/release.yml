@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          go-version-file: go.mod
 
       - run: go vet ./...
       - run: go test ./...
@@ -29,52 +29,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          go-version-file: go.mod
 
-      - name: Cross-compile and package
-        run: |
-          set -euo pipefail
-          TAG="${GITHUB_REF#refs/tags/}"
-          LDFLAGS="-s -w"
-
-          declare -a TARGETS=(
-            "linux/386"
-            "linux/amd64"
-            "linux/arm"
-            "linux/arm64"
-            "darwin/amd64"
-            "darwin/arm64"
-            "windows/386"
-            "windows/amd64"
-          )
-
-          mkdir -p dist
-
-          for target in "${TARGETS[@]}"; do
-            os="${target%/*}"
-            arch="${target#*/}"
-            output="resolveip"
-            if [ "$os" = "windows" ]; then
-              output="resolveip.exe"
-            fi
-
-            echo "Building ${os}/${arch}..."
-            GOOS="$os" GOARCH="$arch" go build -ldflags="$LDFLAGS" -o "$output" ./cmd/resolveip
-
-            archive_name="resolveip-${TAG}-${os}-${arch}"
-            if [ "$os" = "windows" ]; then
-              zip "dist/${archive_name}.zip" "$output"
-            else
-              tar cjf "dist/${archive_name}.tar.bz2" "$output"
-            fi
-            rm -f "$output"
-          done
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - uses: goreleaser/goreleaser-action@v6
         with:
-          generate_release_notes: true
-          files: dist/*
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

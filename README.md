@@ -14,7 +14,7 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 Binaries for Linux, macOS (Intel and Apple Silicon) and Windows are automatically built by GitHub Actions and available
 on the [project's releases page](https://github.com/hreese/resolveip/releases).
 
-Note to macOS users: Open the DMG (Intel) or extract the archive (Apple Silicon), copy resolveip into your ```$PATH``` and remove the
+Note to macOS users: Extract the archive, copy resolveip into your ```$PATH``` and remove the
 quarantine attribute if necessary:
 ```
 xattr -rd com.apple.quarantine resolveip
@@ -43,8 +43,10 @@ go install github.com/hreese/resolveip/v2/cmd/resolveip@latest
 
 #### Build and package for all supported architectures
 
+Cross-compilation and release packaging is handled by [GoReleaser](https://goreleaser.com/).
+To build a snapshot locally:
+
 ```
-git clone https://github.com/hreese/resolveip.git
-cd resolveip
-make
+go install github.com/goreleaser/goreleaser/v2@latest
+goreleaser build --snapshot --clean
 ```
