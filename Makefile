@@ -1,8 +1,8 @@
 packagename := resolveip
-source := github.com/hreese/resolveip/cmd/resolveip
+source := github.com/hreese/resolveip/v2/cmd/resolveip
 builddir := build
 ldflags := "-s -w"
-PLATFORMS_UNIX := linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/ darwin/amd64/dmg/
+PLATFORMS_UNIX := linux/386/tar/ linux/amd64/tar/ linux/arm/tar/ linux/arm64/tar/ darwin/amd64/dmg/ darwin/arm64/tar/
 PLATFORMS_CURRENTLY_UNSUPPORTED := solaris/amd64/tar/ freebsd/386/tar/ freebsd/amd64/tar/
 PLATFORMS_WIN  := windows/386/zip/.exe windows/amd64/zip/.exe
 PLATFORMS := $(PLATFORMS_UNIX) $(PLATFORMS_WIN)
@@ -20,21 +20,22 @@ dmg = cd '$(builddir)/$(os)-$(arch)/' && genisoimage -V '$(packagename)' -D -R -
 release: $(PLATFORMS)
 
 cmd/resolveip/resource.syso: res/icon.ico
-	go generate github.com/hreese/resolveip/cmd/resolveip
+	go generate github.com/hreese/resolveip/v2/cmd/resolveip
 
-$(PLATFORMS_WIN): README.md build cmd/resolveip/resource.syso
+$(PLATFORMS_WIN): README.md cmd/resolveip/resource.syso | build
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '$(builddir)/$(os)-$(arch)/$(packagename)$(ext)' $(source)
 	cd '$(builddir)/$(os)-$(arch)/'
 	sed -r -e '/.screencast01.gif/d' README.md > '$(builddir)/$(os)-$(arch)/README.md'
 	$(call $(packer))
 
-$(PLATFORMS_UNIX): README.md build
+$(PLATFORMS_UNIX): README.md | build
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags=$(ldflags) -o '$(builddir)/$(os)-$(arch)/$(packagename)$(ext)' $(source)
 	cd '$(builddir)/$(os)-$(arch)/'
 	sed -r -e '/.screencast01.gif/d' README.md > '$(builddir)/$(os)-$(arch)/README.md'
 	$(call $(packer))
 
-build: $(PLATFORMS)
+build:
+	mkdir -p $(builddir)
 
 clean:
 	rm -rf $(builddir)

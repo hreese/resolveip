@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hreese/resolveip.svg?branch=master)](https://travis-ci.org/hreese/resolveip)
+[![CI and Release](https://github.com/hreese/resolveip/actions/workflows/release.yml/badge.svg)](https://github.com/hreese/resolveip/actions/workflows/release.yml)
 
 # resolveip
 
@@ -11,10 +11,10 @@ When reading files (this includes dropping text files on the resolveip icon) on 
 
 ## Binary releases
 
-Binaries for Linux, macOS and Windows are automatically built by travis-ci and available
+Binaries for Linux, macOS (Intel and Apple Silicon) and Windows are automatically built by GitHub Actions and available
 on the [project's releases page](https://github.com/hreese/resolveip/releases).
 
-Note to macOS users: Open the DMG, copy resolveip into your ```$PATH``` and remove the
+Note to macOS users: Open the DMG (Intel) or extract the archive (Apple Silicon), copy resolveip into your ```$PATH``` and remove the
 quarantine attribute if necessary:
 ```
 xattr -rd com.apple.quarantine resolveip
@@ -29,20 +29,22 @@ xattr -rd com.apple.quarantine resolveip
 ### Get the source
 
 ```
-go get github.com/hreese/resolveip/...
+git clone https://github.com/hreese/resolveip.git
+cd resolveip
 # install this if you want to compile for Windows
-go git github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+go install github.com/josephspurrier/goversioninfo/cmd/goversioninfo@latest
 ```
 ### Build
 
 #### Build for your local architecture
 ```
-go install github.com/hreese/resolveip/cmd/resolveip
+go install github.com/hreese/resolveip/v2/cmd/resolveip@latest
 ```
 
 #### Build and package for all supported architectures
 
 ```
-cd $GOPATH/src/github.com/hreese/resolveip
+git clone https://github.com/hreese/resolveip.git
+cd resolveip
 make
 ```
