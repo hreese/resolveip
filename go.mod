@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/fatih/color v1.19.0
-	github.com/hreese/goodregex v0.0.0-20190616141839-edb7049ba430
+	github.com/hreese/goodregex v0.9.0
 )
 
 require (
